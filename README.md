@@ -78,7 +78,7 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    pip install -r requirements.txt
    ```
-3. Create a LinkedIn developer application and note the Client ID and Client Secret. Add http://localhost:8000/auth/linkedin/callback as a redirect_uri. Note the Client ID and CLient Secret
+3. Create a LinkedIn developer application and note the Client ID and Client Secret
 4. Add http://localhost:8000/auth/linkedin/callback as a redirect_uri within the developer application and ensure "Share on LinkedIn" and "Sign In with LinkedIn using OpenID Connect" products are enabled
 5. Set Up Environment Variables
    ```sh
