@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, Request, HTTPException, Depends
 from fastapi.responses import RedirectResponse
+from fastapi.security import OAuth2PasswordBearer
 import requests
 import os
 from dotenv import load_dotenv
@@ -13,7 +14,6 @@ router = APIRouter()
 active_states = set()
 
 # In-memory storage (replace with database in production)
-user_store = {}
 token_store = {}
 
 # Update environment variable names to match LinkedIn's standard
@@ -39,7 +39,7 @@ async def linkedin_auth():
         f"&client_id={LINKEDIN_CLIENT_ID}"
         f"&redirect_uri={quote_plus(REDIRECT_URI)}"
         f"&state={csrf_token}"
-        f"&scope=profile%20email"
+        f"&scope=openid%20profile%20email"
     )
 
     return RedirectResponse(auth_url)
@@ -49,29 +49,11 @@ async def linkedin_callback(request: Request):
     """
     Handle the callback from LinkedIn OAuth.
     """
-    # Debug: Print all query parameters
-    print("\nCallback Debug Information:")
     query_params = dict(request.query_params)
-    print("All query parameters received:", query_params)
-    
-    # Check for error parameters that LinkedIn might send
-    error = query_params.get('error')
-    error_description = query_params.get('error_description')
-    
-    if error or error_description:
-        error_msg = f"LinkedIn Error: {error}"
-        if error_description:
-            error_msg += f"\nDescription: {unquote(error_description)}"
-        print(error_msg)
-        raise HTTPException(status_code=400, detail=error_msg)
 
     # Get code and state from query params
     code = query_params.get('code')
     state = query_params.get('state')
-
-    print(f"\nReceived code: {code}")
-    print(f"Received state: {state}")
-    print(f"Active states: {active_states}")
 
     if not code:
         raise HTTPException(
@@ -120,10 +102,14 @@ async def linkedin_callback(request: Request):
         
         if not access_token:
             raise HTTPException(status_code=400, detail="No access token in response")
-        
-        profile_url = "https://api.linkedin.com/v2/me"
-        headers = {"Authorization": f"Bearer {access_token}"}
-        profile_response = requests.get(profile_url, headers=headers)
+
+        # Store the token data
+        token_store[access_token] = {
+            "expires_in": expires_in,
+            "refresh_token": refresh_token,
+            "refresh_token_expires_in": refresh_token_expires_in,
+            "scope": scope
+        }
         
         return {
             "access_token": access_token,
@@ -131,8 +117,8 @@ async def linkedin_callback(request: Request):
             "refresh_token": refresh_token,
             "refresh_token_expires_in": refresh_token_expires_in,
             "scope": scope,
-            "profile": profile_response.json() if profile_response.status_code == 200 else None
         }
+
     except requests.exceptions.RequestException as e:
         print(f"Request Exception: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Request failed: {str(e)}")
