@@ -1,0 +1,11 @@
+setup.py
+app/__init__.py
+app/auth.py
+app/main.py
+app/models.py
+app/scrape.py
+salliance_technical.egg-info/PKG-INFO
+salliance_technical.egg-info/SOURCES.txt
+salliance_technical.egg-info/dependency_links.txt
+salliance_technical.egg-info/requires.txt
+salliance_technical.egg-info/top_level.txt
