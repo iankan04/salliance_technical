@@ -71,28 +71,27 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/iankan04/salliance_technical.git
    ```
-3. Install dependencies
+2. Install dependencies
    ```sh
    pip install -r requirements.txt
    ```
-4. Create a LinkedIn developer application and note the Client ID and Client Secret. Add http://localhost:8000/auth/linkedin/callback as a redirect_uri.
+3. Create a LinkedIn developer application and note the Client ID and Client Secret. Add http://localhost:8000/auth/linkedin/callback as a redirect_uri.
    ```sh
    Note the Client ID and CLient Secret
    ```
-5. Add http://localhost:8000/auth/linkedin/callback as a redirect_uri within the developer application and ensure "Share on LinkedIn" and "Sign In with LinkedIn using OpenID Connect" products are enabled
+4. Add http://localhost:8000/auth/linkedin/callback as a redirect_uri within the developer application and ensure "Share on LinkedIn" and "Sign In with LinkedIn using OpenID Connect" products are enabled
    
    
-6. Set Up Environment Variables
+5. Set Up Environment Variables
    ```sh
    CLIENT_ID=<your-client-id>
    CLIENT_SECRET=<your-client-secret>
    ``` 
-7. Running the Application
+6. Running the Application
    ```sh
    uvicorn app.main:app --reload --port 8000
    ``` 
