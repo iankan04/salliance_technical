@@ -47,7 +47,6 @@
       </ul>
     </li>
     <li><a href="#testing">Testing</a></li>
-    <li><a href="#license">License</a></li>
   </ol>
 </details>
 
@@ -114,15 +113,6 @@ GET http://localhost:8000/user --> After adding the access token under the Autho
 Type http://localhost:8000/auth/linkedin into browser and follow steps to get access token
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-## License
-
-Distributed under the project_license. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
