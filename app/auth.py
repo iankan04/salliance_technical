@@ -11,12 +11,13 @@ from redis import Redis
 load_dotenv()
 router = APIRouter()
 
+# Stores Active States
 active_states = set()
 
 # In-memory storage (replace with database in production)
 token_store = {}
 
-# Update environment variable names to match LinkedIn's standard
+# Declares .env and global variables
 LINKEDIN_CLIENT_ID = os.getenv("CLIENT_ID")
 LINKEDIN_CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 REDIRECT_URI = "http://localhost:8000/auth/linkedin/callback"
@@ -25,6 +26,9 @@ redis_client = Redis(host='localhost', port=6379, db=0)
 
 @router.get("/linkedin")
 async def linkedin_auth():
+    """
+    Redirects Authentication URL with CLIENT_ID and REDIRECT_URI to LinkedIn
+    """
     if not LINKEDIN_CLIENT_ID:
         raise HTTPException(status_code=500, detail="LINKEDIN_CLIENT_ID not found in environment variables")
     if not LINKEDIN_CLIENT_SECRET:

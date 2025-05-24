@@ -12,6 +12,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/linkedin")
 
 @app.get("/")
 async def root():
+    """
+    Base Case
+    """
     return { "message": "Welcome to your server. Go to /auth/linkedin to start authentication" }
 
 @app.get("/user")
