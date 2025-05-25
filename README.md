@@ -22,7 +22,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-<h3 align="center">SAlliance Technical</h3>
+<h3 align="center">LinkedIn OAuth2.0 Flow</h3>
   <p align="center">
     <br />
     <a href="https://github.com/iankan04/salliance_technical"><strong>Explore the docs »</strong></a>
